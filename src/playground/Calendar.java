@@ -7,17 +7,21 @@ public class Calendar {
         // 31일 - 1,3,5,7,8,10,12월
         // 30일 - 4,6,9,11월
         // 28,29일 - 2월
-
         Scanner scanner = new Scanner(System.in);
-        System.out.println("달을 입력하세요.");
-        int input = scanner.nextInt();
-
-        int[] array = {31,30,28,30,31,30,31,31,30,31,30,31};
-
-        for(int i = 0; i<12; i++) {
-            if(input-1 == i) {
-                System.out.println(i+1+ "월은 " + array[i]+"일까지 있습니다.");
+        int[] monthArr = {31,28,31,30,31,30,31,31,30,31,30,31};
+        while(true) {
+            System.out.println("월을 입력하세요.");
+            int month = scanner.nextInt();
+            if(month == -1) {
+                System.out.println("Have a nice day!");
+                break;
             }
+            for(int i = 0; i<monthArr.length; i++) {
+                if(i == month-1) {
+                    System.out.println(month + "월은 " + monthArr[i] + "일까지 있습니다.");
+                }
+            }
+
         }
     }
 }
