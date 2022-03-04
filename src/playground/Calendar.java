@@ -3,17 +3,30 @@ package playground;
 import java.util.Scanner;
 
 public class Calendar {
-    private static int[] MAX_DAYS = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    private static int[] MAX_DAYS = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    private static int[] LEAP_MAX_DAYS = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    public int getMaxDaysOfMonth(int month) {
-        return MAX_DAYS[month - 1];
+    public boolean isLeapYear(int year) {
+        if(year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) { // 윤년
+            return true;
+        }
+        return false;
+    }
+
+    public int getMaxDaysOfMonth(int year, int month) {
+        if(isLeapYear(year)) { // 윤년일경우
+            return LEAP_MAX_DAYS[month-1];
+        } else { // 평년일경우
+            return MAX_DAYS[month-1];
+        }
     }
 
     public void printCalendar(int year, int month) {
         System.out.printf(" << %4d년  %3d월 >>\n",year, month);
         System.out.println(" SU MO TU WE TH FR SA");
 
-        int maxDay = getMaxDaysOfMonth(month);
+
+        int maxDay = getMaxDaysOfMonth(year, month);
 
         for(int i = 1; i<=maxDay; i++) {
             System.out.printf("%3d", i);
