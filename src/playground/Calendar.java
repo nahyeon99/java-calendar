@@ -21,16 +21,60 @@ public class Calendar {
         }
     }
 
-    public void printCalendar(int year, int month) {
+    // weekday : (SU, MO, WE, TH, FR, SA)
+    public void printCalendar(int year, int month, String weekday) {
         System.out.printf(" << %4d년  %3d월 >>\n",year, month);
         System.out.println(" SU MO TU WE TH FR SA");
 
 
         int maxDay = getMaxDaysOfMonth(year, month);
-
+        int cnt = 0;
+        switch (weekday) {
+            case "SU":
+                break;
+            case "MO":
+                cnt = 1;
+                System.out.printf("   ");
+                break;
+            case "TU":
+                cnt = 2;
+                System.out.printf("   ");
+                System.out.printf("   ");
+                break;
+            case "WE":
+                cnt = 3;
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                break;
+            case "TH":
+                cnt = 4;
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                break;
+            case "FR":
+                cnt = 5;
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                break;
+            case "SA":
+                cnt = 6;
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                System.out.printf("   ");
+                break;
+        }
         for(int i = 1; i<=maxDay; i++) {
             System.out.printf("%3d", i);
-            if(i%7 == 0) {
+            if((i+cnt)%7 == 0) {
                 System.out.println();
             }
         }
