@@ -4,31 +4,6 @@ import java.util.Scanner;
 
 public class Prompt {
 
-    /*
-        @param week 요일명
-        @return 0 ~ 6 (0 = Sunday, 6 = Saturday, default = Sunday)
-     */
-    public int parseDay(String weekday) {
-        switch(weekday){
-            case "SU":
-                return 0;
-            case "MO":
-                return 1;
-            case "TU":
-                return 2;
-            case "WE":
-                return 3;
-            case "TH":
-                return 4;
-            case "FR":
-                return 5;
-            case "SA":
-                return 6;
-            default:
-                return 0;
-        }
-    }
-
     public void runPrompt() {
     // 숫자를 입력받아 해당하는 달의 최대 일수를 출력하는 프로그램
         Scanner scanner = new Scanner(System.in);
@@ -50,12 +25,9 @@ public class Prompt {
                 System.out.println("잘못된 입력입니다.");
                 continue;
             }
-            System.out.println("첫번째 요일을 입력하세요. (SU, MO, TU, WE, TH, FR, SA)");
-            System.out.print("WEEKDAY> ");
-            String str_weekday = scanner.next();
-            int_weekday = parseDay(str_weekday);
 
-            cal.printCalendar(year, month, int_weekday);
+
+            cal.printCalendar(year, month);
         }
 
         System.out.println("bye~");
