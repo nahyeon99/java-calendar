@@ -1,5 +1,6 @@
 package playground;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Prompt<T> {
@@ -14,10 +15,29 @@ public class Prompt<T> {
         System.out.print("입력 > ");
     }
 
-    private void cmdRegister() {
+    private void cmdSearch(Scanner s, Calendar c) {
+        System.out.println("[일정 검색]");
+        System.out.println("날짜를 입력해 주세요 (yyyy-MM-dd).");
+        String date = s.next();
+        String plan = "";
+        try {
+            plan = c.searchPlan(date);
+        } catch (ParseException e) {
+            e.printStackTrace(); // 주석처리가능
+            System.err.println("일정 검색 중 오류가 발생했습니다.");
+        }
+        System.out.println(plan);
     }
 
-    private void cmdSearch() {
+    private void cmdRegister(Scanner s, Calendar c) throws ParseException {
+        System.out.println("[새 일정 등록]");
+        System.out.println("날짜를 입력해 주세요. (yyyy-MM-dd).");
+        String date = s.next();
+        String text = "";
+        s.nextLine(); // ignore one newline
+        System.out.println("일정을 입력해 주세요.");
+        text = s.nextLine(); // 한 줄 통째로 읽기
+        c.registerPlan(date, text);
     }
 
     private void cmdCal(Scanner s, Calendar c) { // Scanner, Calendar는 외부에서 만들고 참조해서 사용(계속 만들면 오버헤드 발생)
@@ -37,15 +57,15 @@ public class Prompt<T> {
         c.printCalendar(year, month);
     }
 
-    private void runPrompt() {
+    private void runPrompt() throws ParseException {
         Scanner scanner = new Scanner(System.in);
         Calendar cal = new Calendar();
 
         while(true) {
             printMenu();
             String cmd = scanner.next();
-            if(cmd.equals("1")) cmdRegister();
-            else if(cmd.equals("2")) cmdSearch();
+            if(cmd.equals("1")) cmdRegister(scanner, cal);
+            else if(cmd.equals("2")) cmdSearch(scanner, cal);
             else if(cmd.equals("3")) cmdCal(scanner, cal);
             else if(cmd.equals("4")) printMenu();
             else if(cmd.equals("q")) break;
@@ -54,7 +74,7 @@ public class Prompt<T> {
         scanner.close();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         // 셀 실행
         Prompt p = new Prompt();
         p.runPrompt();

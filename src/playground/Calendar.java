@@ -1,8 +1,45 @@
 package playground;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 public class Calendar {
     private static int[] MAX_DAY = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     private static int[] LEAP_MAX_DAY = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    private HashMap<Date, String> planMap = new HashMap<>();
+
+    public Calendar() {
+        planMap = new HashMap<Date, String>();
+    }
+
+    /*
+        @param date ex: "2022-03-07"
+        @param plan
+     */
+
+    public void registerPlan(String strDate, String plan) throws ParseException {
+//        Date nowDate = new Date();
+//        System.out.println("포맷 지정 전 : " + nowDate);
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 mm월 dd일");
+//        // 원하는 데이터 포맷 지정
+//        String strNowDate = simpleDateFormat.format(nowDate);
+//        // 지정한 포맷으로 변환
+//        System.out.println("포맷 지정 후 : " + strNowDate);
+
+        // parse err, ParseException 으로 예외처리
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+//        System.out.println(date);
+        planMap.put(date, plan);
+    }
+
+    public String searchPlan(String strDate) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+        String plan = planMap.get(date);
+        return plan;
+    }
 
     // 윤년,평년 체크하는 메소드
     private boolean isLeapYear(int year) {
@@ -62,5 +99,18 @@ public class Calendar {
         int weekday = (cnt+STANDARD_WEEKDAY) % 7;
 
         return weekday;
+    }
+
+    public static void main(String[] args) throws ParseException {
+        Calendar cal = new Calendar();
+        System.out.println(cal.getWeekday(1970,1) == 4);
+        System.out.println(cal.getWeekday(1971,1) == 5);
+        System.out.println(cal.getWeekday(1972,1) == 6);
+        System.out.println(cal.getWeekday(1973,1) == 1);
+        System.out.println(cal.getWeekday(1974,1) == 2);
+
+        // String 으로부터 Date 객체를 받음
+        cal.registerPlan("2022-03-07", "Let's sleep!");
+        System.out.println(cal.searchPlan("2022-03-07").equals("Let's sleep!"));
     }
 }
