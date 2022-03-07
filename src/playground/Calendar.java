@@ -5,14 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+
 public class Calendar {
     private static int[] MAX_DAY = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     private static int[] LEAP_MAX_DAY = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    private HashMap<Date, String> planMap = new HashMap<>();
+    private HashMap<Date, PlanItem> planMap = new HashMap<>();
 
     public Calendar() {
-        planMap = new HashMap<Date, String>();
+        planMap = new HashMap<Date, PlanItem>();
     }
 
     /*
@@ -21,24 +22,13 @@ public class Calendar {
      */
 
     public void registerPlan(String strDate, String plan) throws ParseException {
-//        Date nowDate = new Date();
-//        System.out.println("포맷 지정 전 : " + nowDate);
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 mm월 dd일");
-//        // 원하는 데이터 포맷 지정
-//        String strNowDate = simpleDateFormat.format(nowDate);
-//        // 지정한 포맷으로 변환
-//        System.out.println("포맷 지정 후 : " + strNowDate);
-
-        // parse err, ParseException 으로 예외처리
-        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
-//        System.out.println(date);
-        planMap.put(date, plan);
+        PlanItem p = new PlanItem(strDate, plan);
+        planMap.put(p.getDate(), p);
     }
 
-    public String searchPlan(String strDate) throws ParseException {
-        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
-        String plan = planMap.get(date);
-        return plan;
+    public PlanItem searchPlan(String strDate) {
+        Date date = PlanItem.getDatefromString(strDate);
+        return planMap.get(date);
     }
 
     // 윤년,평년 체크하는 메소드
